@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Chat Room</title>
+<script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// Endpoint URL
+	var socket = io.connect('http://127.0.0.1:3000/socket.io/');
+	// var socket = io.connect('http://127.0.0.1:3000/');
+    
+    var test  = "some text example"
+    socket.send('notice', test);
+
+
+	// Connection
+	socket.on('connect', function() {
+		socket.send('User has connected!');
+	});
+
+	// Message Listner
+	socket.on('message', function(msg) {
+		$("#messages").append('<li>'+msg+'</li>');
+		console.log('Received message');
+	});
+
+
+	// Send Message value of id="myMessage"　
+	$('#sendbutton').on('click', function() {
+        console.log($('#myMessage').val());
+		socket.send($('#myMessage').val());
+		$('#myMessage').val('');
+	});
+
+});
+</script>
+<ul id="messages"></ul>
+<input type="text" id="myMessage">
+<button id="sendbutton">Send</button>
+</body>
+</html>
+
