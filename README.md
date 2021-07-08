@@ -17,4 +17,4 @@ go run main.go
 ```
 
 ### 3. Start client side in Web-browser
-- Open ```index.html''' in your Web-browser.
+- Open ```index.html``` in your Web-browser.
