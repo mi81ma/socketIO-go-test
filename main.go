@@ -12,9 +12,12 @@ import (
 )
 
 func main() {
+	log.Println("Hello go-socketio")
+
 	server := socketio.NewServer(nil)
 
 	server.OnConnect("/", func(s socketio.Conn) error {
+		log.Println("Connection: ")
 
 		s.SetContext("")
 		log.Println("connected:", s.ID())
@@ -55,11 +58,13 @@ func main() {
 
 	// CORS -----------------
 	mux := http.NewServeMux()
+	log.Println("mux: ", mux)
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte("{\"hello\": \"world\"}"))
 	})
 	handler := cors.Default().Handler(mux)
+	log.Println("handler: ", handler)
 	// ---------------------
 
 	log.Fatal(http.ListenAndServe(":3000", handler))
